@@ -112,11 +112,11 @@ int main(int argc, char *argv[])
         noe_total = 0.0; // reset
     }
 
-    std::cout << "OME NAc total noe is " << total_OME << std::endl;
-    std::cout << "6VA NAc total noe is " << total_6VA << std::endl;
-    std::cout << "0SA NAc total noe is " << total_0SA << std::endl;
-    std::cout << "0SA H4H6 total noe is " << total_n4n6 << std::endl;
-    std::cout << "0SA H8H9 total noe is " << total_n8n9 << std::endl;
+    std::cout << "OME:NAc total noe is " << total_OME << std::endl;
+    std::cout << "6VA:NAc total noe is " << total_6VA << std::endl;
+    std::cout << "0SA:NAc total noe is " << total_0SA << std::endl;
+    std::cout << "0SA:H4H6 total noe is " << total_n4n6 << std::endl;
+    std::cout << "0SA:H8H9 total noe is " << total_n8n9 << std::endl;
 
     return 0;
 }
