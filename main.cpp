@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     prep.push_back(parameterDirectory + "/GLYCAM_06j-1.prep");
 
     std::string parameter_file_path = parameterDirectory + "/GLYCAM_06j.dat";
-    std::string ion_parameter_file_path = parameterDirectory + "/atomic_ions.lib";
+    //std::string ion_parameter_file_path = parameterDirectory + "/atomic_ions.lib";
 
     //************************************************//
     // Load PDB file                                  //
@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
     Assembly receptor;
     receptor.BuildAssemblyFromPdbFile( (working_Directory + "/" + argv[1]), amino_libs, glycam_libs, other_libs, prep, parameter_file_path );
     receptor.BuildStructureByDistance();
-
     Assembly ligand;
     ligand.BuildAssemblyFromPdbFile( (working_Directory + "/" + argv[2]), amino_libs, glycam_libs, other_libs, prep, parameter_file_path );
     ligand.BuildStructureByDistance();
@@ -64,7 +63,7 @@ int main(int argc, char *argv[])
 
     // Iterate through H atoms and calculate distance to atoms in target residue
     double distance = 0.0;
-    double noe = 0.0, noe_total = 0.0, total_OME = 0.0, total_6VA = 0.0, total_0SA = 0.0, total_n4n6 = 0.0, total_n8n9 = 0.0;
+    double noe = 0.0, noe_total = 0.0, total_6VAH6 = 0.0, total_OME = 0.0, total_6VA = 0.0, total_0SA = 0.0, total_n4n6 = 0.0, total_n8n9 = 0.0;
     Atom *r_atom;
     Atom *l_atom;
     std::cout.precision(10);
@@ -93,6 +92,10 @@ int main(int argc, char *argv[])
         {
             total_6VA += noe_total;
         }
+        else if ( (l_atom->GetResidue()->GetName().compare("6VA") == 0 ) && (l_atom->GetName().find("H6") != std::string::npos) )
+        {
+            total_6VAH6 += noe_total;
+        }
         else if ( (l_atom->GetResidue()->GetName().compare("0SA") == 0 ) && (l_atom->GetName().find("M") != std::string::npos) )
         {
             total_0SA += noe_total;
@@ -114,14 +117,15 @@ int main(int argc, char *argv[])
 
     std::cout << "OME:NAc total noe is " << total_OME << std::endl;
     std::cout << "6VA:NAc total noe is " << total_6VA << std::endl;
+    std::cout << "6VA:H6 total noe is " << total_6VAH6 << std::endl;
     std::cout << "0SA:NAc total noe is " << total_0SA << std::endl;
     std::cout << "0SA:H4H6 total noe is " << total_n4n6 << std::endl;
     std::cout << "0SA:H8H9 total noe is " << total_n8n9 << std::endl;
 
+    double tmp = (1 / pow (6, 6) );
+    std::cout << "Smallest possible value is "<< tmp << std::endl;
     return 0;
 }
-
-
 
 
 double GetDistanceToAtom(Atom *A, Atom *otherAtom)
