@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     // Iterate through H atoms and calculate distance to atoms in target residue
     double distance = 0.0;
-    double noe = 0.0, noe_total = 0.0, total_6VAH6 = 0.0, total_OME = 0.0, total_6VA = 0.0, total_0SA = 0.0, total_n4n6 = 0.0, total_n8n9 = 0.0;
+    double noe = 0.0, noe_total = 0.0, total_6VAH6 = 0.0, total_OME = 0.0, total_6VA = 0.0, total_0SA = 0.0, total_n8n9 = 0.0; //, total_n4n6 = 0.0; //OG 2017.10.13 update.
     Atom *r_atom;
     Atom *l_atom;
     std::cout.precision(10);
@@ -100,14 +100,15 @@ int main(int argc, char *argv[])
         {
             total_0SA += noe_total;
         }
-        else if ( (l_atom->GetResidue()->GetName().compare("0SA") == 0 ) && ( (l_atom->GetName().find("H8") != std::string::npos) || (l_atom->GetName().find("H9") != std::string::npos) ) )
+        else if ( (l_atom->GetResidue()->GetName().compare("0SA") == 0 ) && ( (l_atom->GetName().find("H8") != std::string::npos) || (l_atom->GetName().compare("H9S") == 0) ) )
         {
             total_n8n9 += noe_total;
         }
+        /* OG 2017.10.13 update. New data from John Gluska separates the H4 and H6 signals of 0SA. No need for combined value.
         else if ( (l_atom->GetResidue()->GetName().compare("0SA") == 0 ) && ( (l_atom->GetName().find("H4") != std::string::npos) || (l_atom->GetName().find("H6") != std::string::npos) ) )
         {
             total_n4n6 += noe_total;
-        }
+        }*/
         else
         {
             std::cout << l_atom->GetResidue()->GetName() << ":" << l_atom->GetName() << " total noe is " << noe_total << std::endl;
@@ -119,7 +120,7 @@ int main(int argc, char *argv[])
     std::cout << "6VA:NAc total noe is " << total_6VA << std::endl;
     std::cout << "6VA:H6 total noe is " << total_6VAH6 << std::endl;
     std::cout << "0SA:NAc total noe is " << total_0SA << std::endl;
-    std::cout << "0SA:H4H6 total noe is " << total_n4n6 << std::endl;
+    //std::cout << "0SA:H4H6 total noe is " << total_n4n6 << std::endl; // OG 2017.10.13 update.
     std::cout << "0SA:H8H9 total noe is " << total_n8n9 << std::endl;
 
     double tmp = (1 / pow (6, 6) );

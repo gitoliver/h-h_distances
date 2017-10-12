@@ -1,0 +1,1 @@
+g++ -I/home/oliver/Programs/gems/gmml/includes/* -L/home/oliver/Programs/gems/gmml//bin/ io.cpp main.cpp -lgmml -o h-h.exe
